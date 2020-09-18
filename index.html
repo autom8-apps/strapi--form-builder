@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- <script src="./mocks/content-type.response.js"></script> -->
+  <script src="./dist/main.js"></script>
+  <script>
+    const baseURL = "https://recharge-settings.herokuapp.com";
+    const contentType = "application::global-settings.global-settings";
+    const FormFactory = new StrapiFormBuilder.Factory(baseURL, {
+      identifier: "test_user",
+      password: "password"
+    });
+
+    const Client = FormFactory.getStrapiAPI();
+
+    const opts = {
+      "_where[users.username]": "test_user",
+      "_limit": 1
+    };
+
+    const existingEntries = Client.getEntries("portal-page-settings", {
+      "_where[users.domain_contains]": "flutterhabit",
+      "_limit": 1
+    }).then(entries => {
+    /**
+     * This function does the following:
+     * - it gets the contentType from your Strapi API
+     * - looks for an existing entry based on params i.e. _where[users.domain_contains]
+     * - if an existing records is set
+     */
+      FormFactory.getForm(contentType, {}).then(schema => {
+        debugger;
+      });
+    });
+  </script>
+</body>
+</html>
